@@ -390,26 +390,35 @@ footer {
         grid-template-columns: 1fr;
     }
 
+    /* Move hamburger slightly to left to not overlap with theme toggle if needed, or keep as is */
+    .hamburger {
+        display: block;
+        z-index: 1001;
+        /* Above nav menu background */
+        margin-right: 40px;
+        /* Space for theme toggle */
+    }
+
     .nav-links {
         display: none;
-        position: absolute;
-        top: 70px;
+        position: fixed;
+        /* Fixed for full screen overlay */
+        top: 0;
         left: 0;
         right: 0;
+        bottom: 0;
         background-color: var(--white);
         flex-direction: column;
+        justify-content: center;
         align-items: center;
         width: 100%;
-        padding: 1rem 0;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        height: 100vh;
+        padding: 0;
+        z-index: 1000;
     }
 
     .nav-links.active {
         display: flex;
-    }
-
-    .hamburger {
-        display: block;
     }
 
     .hamburger.active .bar:nth-child(2) {

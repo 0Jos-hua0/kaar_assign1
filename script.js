@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             email,
             course,
             age,
-            score: Math.floor(Math.random() * 101) // Random score 0-100
+            scores: Array.from({ length: 5 }, () => Math.floor(Math.random() * 101)) // 5 Random scores 0-100
         };
 
         // Add to state

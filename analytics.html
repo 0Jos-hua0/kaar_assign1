@@ -7,6 +7,7 @@
     <title>Student Analytics - Student Portal</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -16,7 +17,12 @@
                 <img src="Logo.png" alt="KaarTech Logo" class="logo" onerror="this.style.display='none'">
                 <h1>Student Portal</h1>
             </div>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="#" class="active">Analytics</a></li>
                 <li><a href="courses.html">Courses</a></li>
@@ -26,10 +32,11 @@
     </header>
 
     <main>
-        <section class="form-section" style="max-width: 800px;">
+        <section class="form-section" style="max-width: 1000px;">
             <h2>Student Performance Analytics</h2>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
                 <div style="background: white; padding: 1rem; border: 1px solid #ddd; border-radius: 4px; text-align: center;"
                     class="card">
                     <h3>Total Students</h3>
@@ -38,19 +45,25 @@
                 </div>
                 <div style="background: white; padding: 1rem; border: 1px solid #ddd; border-radius: 4px; text-align: center;"
                     class="card">
-                    <h3>Average Score</h3>
-                    <p id="average-score" style="font-size: 2rem; color: var(--primary-color); font-weight: bold;">0</p>
+                    <h3>Class Average</h3>
+                    <p id="average-score" style="font-size: 2rem; color: var(--primary-color); font-weight: bold;">0%
+                    </p>
                 </div>
             </div>
 
-            <h3>Individual Performance</h3>
+            <div
+                style="background: white; padding: 1rem; border-radius: 8px; box-shadow: var(--shadow); margin-bottom: 2rem;">
+                <canvas id="performanceChart"></canvas>
+            </div>
+
+            <h3>Individual Performance (Average of 5 Subjects)</h3>
             <div class="table-container" style="margin-top: 1rem;">
                 <table>
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Course</th>
-                            <th>Score</th>
+                            <th>Avg Score</th>
                             <th>Performance</th>
                         </tr>
                     </thead>
@@ -100,7 +113,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Re-implement theme toggle here since we aren't loading script.js
+            // Theme Toggle Logic
             const themeToggleBtn = document.createElement('button');
             themeToggleBtn.className = 'theme-toggle';
             themeToggleBtn.innerHTML = '🌙';
@@ -123,6 +136,16 @@
                 }
             });
 
+            // Hamburger Logic
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('nav-links');
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
+
             // Analytics Logic
             const students = JSON.parse(localStorage.getItem('students')) || [];
             const totalStudents = students.length;
@@ -131,32 +154,72 @@
             document.getElementById('total-students').innerText = totalStudents;
 
             if (totalStudents > 0) {
-                // Calculate Average
-                const totalScore = students.reduce((sum, s) => sum + (s.score || 0), 0);
-                const avg = (totalScore / totalStudents).toFixed(1);
-                document.getElementById('average-score').innerText = avg + '%';
+                // Calculate Data
+                const names = [];
+                const avgScores = [];
+                let classTotalScore = 0;
 
-                // Populate Table
                 students.forEach(student => {
+                    // Handle both old single score and new array scores
+                    let avg = 0;
+                    if (Array.isArray(student.scores)) {
+                        const sum = student.scores.reduce((a, b) => a + b, 0);
+                        avg = sum / student.scores.length;
+                    } else if (student.score !== undefined) {
+                        avg = student.score;
+                    }
+
+                    names.push(student.name);
+                    avgScores.push(avg);
+                    classTotalScore += avg;
+
+                    // Table Row
                     const row = document.createElement('tr');
-                    const score = student.score || 0;
                     let performance = 'Needs Improvement';
                     let color = 'red';
 
-                    if (score >= 90) { performance = 'Excellent'; color = 'green'; }
-                    else if (score >= 75) { performance = 'Good'; color = 'blue'; }
-                    else if (score >= 50) { performance = 'Average'; color = 'orange'; }
+                    if (avg >= 90) { performance = 'Excellent'; color = 'green'; }
+                    else if (avg >= 75) { performance = 'Good'; color = 'blue'; }
+                    else if (avg >= 50) { performance = 'Average'; color = 'orange'; }
 
                     row.innerHTML = `
                         <td>${student.name}</td>
                         <td>${student.course}</td>
-                        <td>${score}%</td>
+                        <td>${avg.toFixed(1)}%</td>
                         <td><span style="color: ${color}; font-weight: bold;">${performance}</span></td>
                     `;
                     tableBody.appendChild(row);
                 });
+
+                const classAvg = (classTotalScore / totalStudents).toFixed(1);
+                document.getElementById('average-score').innerText = classAvg + '%';
+
+                // Render Chart
+                const ctx = document.getElementById('performanceChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: names,
+                        datasets: [{
+                            label: 'Average Score (%)',
+                            data: avgScores,
+                            backgroundColor: 'rgba(207, 46, 46, 0.6)',
+                            borderColor: 'rgba(207, 46, 46, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
+                    }
+                });
             } else {
-                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No student data available. Regsisters students on Home page.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No student data available. Register students on Home page.</td></tr>';
             }
         });
     </script>
