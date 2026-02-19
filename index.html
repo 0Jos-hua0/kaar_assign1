@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo-container">
+                <!-- Using the existing logo file if available, otherwise alt text will show -->
+                <img src="Logo.png" alt="KaarTech Logo" class="logo" onerror="this.style.display='none'">
+                <h1>Student Portal</h1>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#students">Students</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero/Cards Section -->
+        <section class="cards-section">
+            <article class="card">
+                <div class="card-image-placeholder"></div>
+                <h3>Student Analytics</h3>
+                <p>Track student performance and attendance with our comprehensive analytics dashboard.</p>
+                <button class="btn-learn-more">Learn More</button>
+            </article>
+            <article class="card">
+                <div class="card-image-placeholder"></div>
+                <h3>Course Management</h3>
+                <p>Manage courses, subjects, and curriculum with ease using our intuitive interface.</p>
+                <button class="btn-learn-more">Learn More</button>
+            </article>
+            <article class="card">
+                <div class="card-image-placeholder"></div>
+                <h3>Faculty Portal</h3>
+                <p>Connect with faculty members and schedule consultations directly through the portal.</p>
+                <button class="btn-learn-more">Learn More</button>
+            </article>
+        </section>
+
+        <!-- Registration Form Section -->
+        <section class="form-section" id="contact">
+            <h2>Student Registration</h2>
+            <form id="student-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter student name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter student email" required>
+                </div>
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <select id="course" name="course" required>
+                        <option value="" disabled selected>Select a course</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Business Administration">Business Administration</option>
+                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        <option value="Information Technology">Information Technology</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" placeholder="Enter age" min="16" max="100" required>
+                </div>
+                <button type="submit" class="btn-submit">Register Student</button>
+            </form>
+        </section>
+
+        <!-- Student Table Section -->
+        <section class="table-section" id="students">
+            <h2>Registered Students</h2>
+            <div class="table-container">
+                <table id="student-table">
+                    <thead>
+                        <tr>
+                            <th>Serial No</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Course</th>
+                            <th>Age</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-body">
+                        <!-- Rows will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+            <p id="no-data-msg" class="hidden">No students registered yet.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 KaarTech Student Portal. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook">Facebook</a>
+                <a href="#" aria-label="Twitter">Twitter</a>
+                <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                <a href="#" aria-label="Instagram">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
