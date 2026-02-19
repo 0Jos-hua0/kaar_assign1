@@ -305,7 +305,9 @@ tbody tr:hover {
 
 /* Footer */
 footer {
-    background-color: #333;
+    background-image: url('footer.jpg');
+    background-size: cover;
+    background-position: center;
     color: var(--white);
     padding: 2rem 20px;
     margin-top: auto;
