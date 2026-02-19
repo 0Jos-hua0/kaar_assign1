@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management - Student Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo-container">
+                <img src="Logo.png" alt="KaarTech Logo" class="logo" onerror="this.style.display='none'">
+                <h1>Student Portal</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="analytics.html">Analytics</a></li>
+                <li><a href="#" class="active">Courses</a></li>
+                <li><a href="faculty.html">Faculty</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="table-section"
+            style="background: white; padding: 2rem; border-radius: 8px; box-shadow: var(--shadow);">
+            <h2>Course Management</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Credits</th>
+                            <th>Instructor</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CS101</td>
+                            <td>Intro to Computer Science</td>
+                            <td>4</td>
+                            <td>Dr. Smith</td>
+                            <td><span style="color: green;">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>BUS202</td>
+                            <td>Business Ethics</td>
+                            <td>3</td>
+                            <td>Prof. Johnson</td>
+                            <td><span style="color: green;">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>ME301</td>
+                            <td>Thermodynamics</td>
+                            <td>4</td>
+                            <td>Dr. Brown</td>
+                            <td><span style="color: red;">Closed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 KaarTech Student Portal. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

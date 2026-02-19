@@ -23,8 +23,9 @@
 body {
     color: var(--text-color);
     background-color: var(--bg-light);
-    background-image: url('Kaar-Tech-Product-portfolio-UAE-73-2048.webp');
-    background-size: cover;
+    background-image: url('bg.jpg');
+    background-size: 100% 100%;
+    /* Stretch to fit screen */
     background-position: center;
     background-attachment: fixed;
     line-height: 1.6;
