@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             name,
             email,
             course,
-            age
+            age,
+            score: Math.floor(Math.random() * 101) // Random score 0-100
         };
 
         // Add to state
@@ -117,10 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggleBtn.innerHTML = '🌙'; // Default to moon
     themeToggleBtn.ariaLabel = 'Toggle Dark Mode';
 
-    // Insert toggle button into nav
-    const nav = document.querySelector('nav');
-    const hamburgerBtn = document.getElementById('hamburger');
-    nav.insertBefore(themeToggleBtn, hamburgerBtn);
+    // Insert toggle button into body (fixed position)
+    document.body.appendChild(themeToggleBtn);
 
     // Check for saved theme
     if (localStorage.getItem('theme') === 'dark') {
