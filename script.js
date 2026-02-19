@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             students.forEach((student, index) => {
                 const row = document.createElement('tr');
-                
+
                 row.innerHTML = `
                     <td>${index + 1}</td>
                     <td>${escapeHtml(student.name)}</td>
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Global Delete Function (attached to window to be accessible from inline onclick)
-    window.deleteStudent = function(id) {
+    window.deleteStudent = function (id) {
         if (confirm('Are you sure you want to delete this student?')) {
             students = students.filter(student => student.id !== id);
             saveData();
@@ -110,6 +110,34 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.classList.toggle('active');
         navLinks.classList.toggle('active');
     }
+
+    // Theme Toggle
+    const themeToggleBtn = document.createElement('button');
+    themeToggleBtn.className = 'theme-toggle';
+    themeToggleBtn.innerHTML = '🌙'; // Default to moon
+    themeToggleBtn.ariaLabel = 'Toggle Dark Mode';
+
+    // Insert toggle button into nav
+    const nav = document.querySelector('nav');
+    const hamburgerBtn = document.getElementById('hamburger');
+    nav.insertBefore(themeToggleBtn, hamburgerBtn);
+
+    // Check for saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggleBtn.innerHTML = '☀️';
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            themeToggleBtn.innerHTML = '☀️';
+        } else {
+            localStorage.setItem('theme', 'light');
+            themeToggleBtn.innerHTML = '🌙';
+        }
+    });
 
     // XSS Prevention Helper
     function escapeHtml(text) {

@@ -7,10 +7,44 @@
     --text-light: #666666;
     --bg-light: #f9f9f9;
     --white: #ffffff;
+    --card-bg: #ffffff;
     --border-color: #dddddd;
     --table-header-bg: #f2f2f2;
+    --table-bg: #ffffff;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
+}
+
+body.dark-mode {
+    --text-color: #ffffff;
+    --text-light: #cccccc;
+    --bg-light: #121212;
+    --white: #1e1e1e;
+    --card-bg: #1e1e1e;
+    --border-color: #444444;
+    --table-header-bg: #2d2d2d;
+    --table-bg: #1e1e1e;
+    --shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .card,
+body.dark-mode .form-section,
+body.dark-mode .table-container,
+body.dark-mode header,
+body.dark-mode .nav-links {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+body.dark-mode input,
+body.dark-mode select {
+    background-color: #2d2d2d;
+    color: white;
+    border-color: #444;
+}
+
+body.dark-mode tbody tr:hover {
+    background-color: #2d2d2d;
 }
 
 * {
@@ -120,8 +154,18 @@ main {
     margin-bottom: 3rem;
 }
 
+/* Dark Mode Toggle */
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-left: 1rem;
+}
+
 .card {
-    background-color: var(--white);
+    background-color: var(--card-bg);
     border-radius: 8px;
     box-shadow: var(--shadow);
     padding: 1.5rem;
